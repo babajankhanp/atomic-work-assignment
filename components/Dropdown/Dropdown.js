@@ -1,33 +1,30 @@
+/**
+Author - Babajan
+Git - https://github.com/babajankhanp
+* */
+
 import React from "react";
 import styled from "styled-components";
 
 const Dropdown = ({
 	selectedOption,
 	dropdownRef,
-	searchInputRef,
 	toggleDropdown,
 	isOpen,
 	handleSearch,
 	handleSelect,
-	handleKeyDown,
 	searchTerm,
 	filteredOptions,
-	focusedIndex,
 }) => {
 	return (
-		<DropdownContainer aria-hidden={true}>
+		<DropdownContainer>
 			<DropdownWrapper ref={dropdownRef}>
 				<DropdownHeader
 					onClick={toggleDropdown}
-					id="dropdown-header"
-					aria-haspopup="listbox"
-					aria-expanded={isOpen}
-					role="combobox"
-					aria-controls="dropdown-menu"
 				>
 					{selectedOption || "Select an option"}
 					<Chevron isOpen={isOpen}>
-						<i className="fa-solid fa-chevron-up"></i>
+						<i class="fa-solid fa-chevron-up"></i>
 					</Chevron>
 				</DropdownHeader>
 				{isOpen && (
@@ -38,28 +35,18 @@ const Dropdown = ({
 							autoFocus={true}
 							value={searchTerm}
 							onChange={handleSearch}
-							onKeyDown={handleKeyDown}
-							ref={searchInputRef}
-							aria-placeholder="Search options"
-							aria-autocomplete="list"
-							aria-activedescendant={`option-${focusedIndex}`}
+                            aria-placeholder="Search options"
 						/>
-						<DropdownMenu
-							id="dropdown-menu"
-							role="listbox"
-							aria-labelledby="dropdown-header"
-						>
+						<DropdownMenu isOpen={isOpen} aria-expanded={isOpen}>
 							{filteredOptions?.length > 0 ? (
 								filteredOptions?.map((option, index) => (
 									<DropdownItem
-										id={`option-${index}`}
 										key={index}
 										selected={option === selectedOption}
 										onClick={() => handleSelect(option)}
-										tabIndex={-1}
+										tabIndex={0}
 										role="option"
 										aria-selected={option === selectedOption}
-										isFocused={index === focusedIndex}
 									>
 										{option}
 									</DropdownItem>
@@ -81,16 +68,11 @@ const DropdownContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-    margin-top: 2rem;
 `;
 
 const DropdownWrapper = styled.div`
 	position: relative;
 	width: 36rem;
-
-    @media (max-width:768px){
-        width: 100%;
-    }
 `;
 
 const DropdownHeader = styled.div`
@@ -156,8 +138,7 @@ const DropdownItem = styled.li`
 	cursor: pointer;
 	color: black;
 	margin: 0px 4px;
-	background-color: ${(props) =>
-		props.selected || props.isFocused ? "#f5e9fc" : "#fff"};
+	background-color: ${(props) => (props.selected ? "#f5e9fc" : "#fff")};
 
 	&:hover {
 		background-color: #f5e9fc;

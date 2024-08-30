@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+/**
+Author - Babajan
+Git - https://github.com/babajankhanp
+* */
+
+import React, { useState, useEffect,useRef } from 'react';
+
 import Dropdown from './Dropdown';
 import { useClickOutside } from '@/hooks';
 
@@ -8,11 +14,9 @@ const DropdownContainer = ({ url, searchExternal = false }) => {
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [focusedIndex, setFocusedIndex] = useState(-1);
   const dropdownRef = useRef(null);
-  const searchInputRef = useRef(null);
 
-  useClickOutside(dropdownRef, toggleDropdown);
+  useClickOutside(dropdownRef,toggleDropdown)
 
   useEffect(() => {
     if (isOpen && url) {
@@ -20,12 +24,10 @@ const DropdownContainer = ({ url, searchExternal = false }) => {
     }
   }, [isOpen]);
 
-  function toggleDropdown() {
+
+  function toggleDropdown(){
     setIsOpen(!isOpen);
-    if (!isOpen) {
-      setFocusedIndex(-1);
-    }
-  }
+  };
 
   const fetchOptions = async () => {
     try {
@@ -43,6 +45,7 @@ const DropdownContainer = ({ url, searchExternal = false }) => {
     setSearchTerm(value);
 
     if (searchExternal) {
+      // Fetch options from URL based on the search term
       try {
         const response = await fetch(`${url}?search=${value}`);
         const data = await response.json();
@@ -51,11 +54,12 @@ const DropdownContainer = ({ url, searchExternal = false }) => {
         console.error('Error fetching search results:', error);
       }
     } else {
-      const normalizedSearchTerm = value.replace(/\s+/g, '').toLowerCase();
-      const filtered = options?.filter((option) => {
-        const normalizedOption = option.replace(/\s+/g, '').toLowerCase();
-        return normalizedOption.includes(normalizedSearchTerm);
-      });
+      // Filter options internally
+     const normalizedSearchTerm = value.replace(/\s+/g, '').toLowerCase();
+        const filtered = options?.filter((option) => {
+            const normalizedOption = option.replace(/\s+/g, '').toLowerCase();
+            return normalizedOption.includes(normalizedSearchTerm);
+        });
       setFilteredOptions(filtered);
     }
   };
@@ -63,59 +67,19 @@ const DropdownContainer = ({ url, searchExternal = false }) => {
   const handleSelect = (option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    setSearchTerm('');
-    setFocusedIndex(-1);
   };
-
-  const handleKeyDown = (e) => {
-    if (!isOpen) return;
-
-    switch (e.key) {
-      case 'ArrowDown':
-        e.preventDefault();
-        setFocusedIndex((prevIndex) =>
-          prevIndex < filteredOptions.length - 1 ? prevIndex + 1 : 0
-        );
-        break;
-      case 'ArrowUp':
-        e.preventDefault();
-        setFocusedIndex((prevIndex) =>
-          prevIndex > 0 ? prevIndex - 1 : filteredOptions.length - 1
-        );
-        break;
-      case 'Enter':
-        if (focusedIndex >= 0) {
-          handleSelect(filteredOptions[focusedIndex]);
-        }
-        break;
-      case 'Escape':
-        toggleDropdown();
-        break;
-      default:
-        break;
-    }
-  };
-
-  useEffect(() => {
-    if (focusedIndex >= 0 && focusedIndex < filteredOptions.length) {
-      searchInputRef.current?.setAttribute('aria-activedescendant', `option-${focusedIndex}`);
-    }
-  }, [focusedIndex, filteredOptions]);
 
   return (
     <Dropdown
-      selectedOption={selectedOption}
-      toggleDropdown={toggleDropdown}
-      dropdownRef={dropdownRef}
-      searchInputRef={searchInputRef}
-      isOpen={isOpen}
-      handleSearch={handleSearch}
-      handleSelect={handleSelect}
-      handleKeyDown={handleKeyDown}
-      searchTerm={searchTerm}
-      filteredOptions={filteredOptions}
-      focusedIndex={focusedIndex}
-    />
+    selectedOption ={selectedOption}
+    toggleDropdown = {toggleDropdown}
+    dropdownRef={dropdownRef}
+    isOpen = {isOpen}
+    handleSearch = {handleSearch}
+    handleSelect={handleSelect}
+    searchTerm ={searchTerm}
+    filteredOptions ={filteredOptions}
+     />
   );
 };
 
