@@ -10,7 +10,7 @@ const Dropdown = ({
 	selectedOption,
 	isLoading,
 	dropdownRef,
-	handleKeyUp,
+	handleKeyDown,
 	optionsRefs,
 	toggleDropdown,
 	isOpen,
@@ -18,10 +18,13 @@ const Dropdown = ({
 	handleSelect,
 	searchTerm,
 	filteredOptions,
+	dropdownKey,
+	label
 }) => {
 	return (
 		<DropdownSection>
 		<DropdownContainer
+		        id={dropdownKey}
 		        ref={dropdownRef}
 				onClick={toggleDropdown}
 				tabIndex={0}
@@ -35,29 +38,19 @@ const Dropdown = ({
 						e.preventDefault();
 						toggleDropdown();
 					}
-				}}>
+				}}
+				>
 				<DropdownTitleWithAestrick>
-				Workspace <span>*</span>
+				{label} <span>*</span>
 				</DropdownTitleWithAestrick>
 			<DropdownWrapper
 			>
 				<DropdownHeader id="dropdown-header-label">
 					{
-						selectedOption?.length > 0 ? selectedOption[0].name : "Select an option"
+						selectedOption?.length > 0 ? selectedOption?.[0]?.name : "Select an option"
 					}
-					<Icons>
-						<Chevron
-						isOpen={isOpen}
-						aria-label={isOpen ? "Close dropdown" : "Open dropdown"}
-						role="button"
-						aria-pressed={isOpen}
-						tabIndex={0}
-						onClick={toggleDropdown}
-					>
-						<i className="fa-solid fa-chevron-up"></i>
-					</Chevron>
 					<Chevron
-						isOpen={isOpen}
+						open={isOpen}
 						aria-label={isOpen ? "Close dropdown" : "Open dropdown"}
 						role="button"
 						aria-pressed={isOpen}
@@ -66,11 +59,9 @@ const Dropdown = ({
 					>
 						<i className="fa-solid fa-chevron-up"></i>
 					</Chevron>
-					</Icons>
 				</DropdownHeader>
 				{isOpen && (
 					<DropdownMenuContainer
-					 isOpen={isOpen}
 					 >
 						<SearchInput
 							type="text"
@@ -100,7 +91,7 @@ const Dropdown = ({
 										ref={(item) => (optionsRefs.current[option.id] = item)}
 										tabIndex={0}
 										role="option"
-										onKeyUp={handleKeyUp}
+										onKeyDown={handleKeyDown}
 										aria-selected={option === selectedOption}
 									>
 										{option?.name}
@@ -137,13 +128,15 @@ const DropdownContainer = styled.div`
 	width: 100%;
 `;
 
-const DropdownTitleWithAestrick = styled.h1`
+const DropdownTitleWithAestrick = styled.span`
   font-size: 1rem;
   font-weight: bold;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  padding: 1rem;
+  padding-top: 0.5rem;
   position: relative;
 
   span {
@@ -233,9 +226,9 @@ const DropdownMenu = styled.ul`
 
 const Chevron = styled.span`
 	display: inline-block;
-	margin-left: 8px;
+	padding: 2px;
 	transition: transform 0.3s ease;
-	transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+	transform: ${({ open }) => (open ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 const DropdownItem = styled.li`
