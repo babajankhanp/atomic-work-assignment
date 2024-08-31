@@ -16,8 +16,46 @@ const Home = () => {
       </Head>
       <Section>
        <Conatiner>
-        {/* <h1>Reusable Dropdown Component</h1> */}
-        <Dropdown url="/api/options" />
+        <h1>Reusable Dropdown Component</h1>
+        <Dropdown url="/api/options" id="dp-1"/>
+           <Grid>
+          <Card
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h2>
+              HLD <span>-&gt;</span>
+            </h2>
+            <p>High Level Design of the Dropdown Search Component</p>
+          </Card>
+
+          <Card
+            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h2>
+              LLD <span>-&gt;</span>
+            </h2>
+            <p>Low Level Design Approach of the Dropdown Search Component</p>
+          </Card>
+
+          <Card
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h2>
+              Audit Reports <span>-&gt;</span>
+            </h2>
+            <p>
+              Instantly deploy your Next.js site to a shareable URL
+              with&nbsp;Vercel.
+            </p>
+          </Card>
+        </Grid>
+          <Dropdown url="/api/options" searchExternal={true} id='dp-2' />
         </Conatiner>
       </Section>
    </>
@@ -29,20 +67,21 @@ const Home = () => {
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
-  background: #C6FFDD;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #f7797d, #FBD786, #C6FFDD);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #f7797d, #FBD786, #C6FFDD); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+
 
 `;
 
 const Conatiner = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
-  padding: 4rem 0;
-
+  padding: 4rem 2rem;
+  gap: 2rem;
+  /* width: 30rem; */
+  text-align: center;
 
   &::before {
     content: "";
@@ -65,7 +104,71 @@ const Conatiner = styled.div`
     left: 50%;
     z-index: -1;
   }
+
+  @media (max-width:768px){
+    width: 100%;
+    font-size: 0.8rem;
+  }
 `;
+
+const Grid = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-top: 16rem;
+  z-index: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const Card = styled.a`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 200px;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: rotate(3deg) scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #0070f3;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+  }
+
+  span {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+
+  &:hover span {
+    transform: translateX(4px);
+  }
+`
+
+
 
 
 export default Home;
