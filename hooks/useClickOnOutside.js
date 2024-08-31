@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 
-function useClickOutside(ref, handler) {
+const useClickOutside = (ref, handler) => {
   useEffect(() => {
-    // Define the event listener for detecting clicks outside the ref element
     const handleClickOutside = (event) => {
-      // Check if the click is outside the ref element
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (ref?.current && !ref.current.contains(event.target)) {
         handler(event);
       }
     };
 
-    // Attach the event listener to the document
+    // Bind the event listener
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
 
-    // Cleanup the event listener on component unmount
     return () => {
+      // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
-  }, [ref, handler]); // Re-run the effect if ref or handler changes
-}
+  }, [ref, handler]);
+};
 
 export default useClickOutside;

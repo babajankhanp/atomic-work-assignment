@@ -54,7 +54,7 @@ const Dropdown = ({
 						tabIndex={0}
 						onClick={toggleDropdown}
 					>
-						<i class="fa-solid fa-chevron-up"></i>
+						<i className="fa-solid fa-chevron-up"></i>
 					</Chevron>
 					<Chevron
 						isOpen={isOpen}
@@ -64,7 +64,7 @@ const Dropdown = ({
 						tabIndex={0}
 						onClick={toggleDropdown}
 					>
-						<i class="fa-solid fa-chevron-up"></i>
+						<i className="fa-solid fa-chevron-up"></i>
 					</Chevron>
 					</Icons>
 				</DropdownHeader>

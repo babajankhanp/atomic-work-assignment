@@ -9,35 +9,41 @@ import axios from 'axios';
 import Dropdown from './Dropdown';
 import {
   useClickOutside,
-  useDebounce
+  useDebounce,
+  useUniqueRef,
  } from '@/hooks';
 
-const DropdownContainer = ({ url, searchExternal = false, id }) => {
-  id
-  const [isOpen, setIsOpen] = useState(false);
+const DropdownContainer = ({
+  url,
+  searchExternal = false,
+  id,
+  isOpen,
+  setIsOpen
+ }) => {
+  // const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true)
+
   const dropdownRef = useRef(null);
   const optionsRefs = useRef([]);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
+console.log(isOpen,"from ",id)
   useClickOutside(dropdownRef,toggleDropdown)
 
   useEffect(() => {
-    if (isOpen && url) {
+    if (isOpen && url && !searchTerm) {
       fetchOptions();
     }
-  }, [isOpen]);
+  }, [isOpen, searchTerm]);
 
     useEffect(() => {
     if (debouncedSearchTerm &&  searchExternal && searchTerm) {
       handleExternalSearch(debouncedSearchTerm);
-    } else {
-      fetchOptions()
     }
   }, [debouncedSearchTerm]);
 
@@ -50,7 +56,6 @@ const DropdownContainer = ({ url, searchExternal = false, id }) => {
     try {
       setIsLoading(true)
        const response = await fetch(url);
-       console.log(response, "response")
       const data = await response.json();
       setOptions(data);
       setFilteredOptions(data);
@@ -64,7 +69,7 @@ const DropdownContainer = ({ url, searchExternal = false, id }) => {
   const handleSearch = async (e) => {
     (e) => e.stopPropagation()
     const value = e.target.value;
-
+      setSearchTerm(value);
     if (searchExternal) {
        setSearchTerm(value);
     } else {

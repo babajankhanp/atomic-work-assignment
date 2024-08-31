@@ -2,10 +2,13 @@ import Head from "next/head";
 
 import styled from "styled-components";
 
-import React from 'react'
+import React,{useState} from 'react'
 import { Dropdown } from "@/components";
 
 const Home = () => {
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  console.log(isOpen1, isOpen2, " from home ")
   return (
    <>
      <Head>
@@ -17,8 +20,19 @@ const Home = () => {
       <Section>
        <Conatiner>
         <h1>Reusable Dropdown Component</h1>
-        <Dropdown url="/api/options" id="dp-1"/>
-           <Grid>
+        <Dropdown
+         url="/api/options" id="1"
+          isOpen={isOpen1}
+          setIsOpen={setIsOpen1}
+
+         />
+         <Dropdown
+          url="/api/options" searchExternal={true} id="2"
+          isOpen={isOpen2}
+          setIsOpen={setIsOpen2}
+
+           />
+           {/* <Grid>
           <Card
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             target="_blank"
@@ -54,8 +68,7 @@ const Home = () => {
               with&nbsp;Vercel.
             </p>
           </Card>
-        </Grid>
-          <Dropdown url="/api/options" searchExternal={true} id='dp-2' />
+        </Grid> */}
         </Conatiner>
       </Section>
    </>
@@ -74,7 +87,7 @@ const Home = () => {
 
 const Conatiner = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   position: relative;
