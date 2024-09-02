@@ -173,6 +173,7 @@ const Home = () => {
           </Card>
         </Grid>
      <p>Built By Babajan for <span>AtomicWorks</span> Assignment</p>
+	 <h3>Please find Code at <a href="https://github.com/babajankhanp/atomic-work-assignment">Github</a></h3>
           </GridContainer>
 				</Conatiner>
 			</Section>
@@ -217,8 +218,9 @@ const Conatiner = styled.div`
 const DropdownsConatiner = styled.div`
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	gap: 2rem;
-  padding: 1rem;
+    padding: 1rem;
 
 	h2 {
 		margin-bottom: 1rem;

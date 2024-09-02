@@ -149,6 +149,10 @@ const DropdownTitleWithAestrick = styled.span`
 const DropdownWrapper = styled.div`
 	position: relative;
 	width: 36rem;
+
+	@media (max-width:768px){
+		width: 100%;
+	}
 `;
 
 const DropdownHeader = styled.div`

@@ -68,6 +68,7 @@ const DropdownContainer = ({
     (e) => e.stopPropagation()
     const value = e.target.value;
       setSearchTerm(value);
+
     if (searchExternal) {
        setSearchTerm(value);
     } else {
@@ -138,11 +139,9 @@ const DropdownContainer = ({
 
   const handleKeyDown = (e) => {
   const { key } = e;
-  const currentIndex = optionsRefs.current.findIndex(
-    (ref) => ref && ref === document.activeElement
-  );
 
-  console.log(e, currentIndex, "currentIndex");
+    const focusedElement = document.activeElement;
+    const currentIndex = optionsRefs.current.findIndex(item => item === focusedElement);
 
   switch (key) {
     case 'ArrowDown':
@@ -162,7 +161,8 @@ const DropdownContainer = ({
       console.log('Entering before', currentIndex);
       if (currentIndex >= 0) {
         console.log('Entering', currentIndex);
-        handleSelect(filteredOptions[currentIndex]);
+        console.log('Entering with minus', currentIndex-1);
+        handleSelect(filteredOptions[currentIndex-1]);
       } else {
         console.log('No option selected');
       }
