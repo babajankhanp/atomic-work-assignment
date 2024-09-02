@@ -43,13 +43,13 @@ const LLD = [
     id:1,
     title:"SnapShot of code Implementation",
     alt:"Brief Information about LLD Implementation Part1",
-    imageUrl:"https://ik.imagekit.io/vndn6dm18/code-1.png?updatedAt=1725102346972",
+	imageUrl:"https://ik.imagekit.io/vndn6dm18/code-2.png?updatedAt=1725102347158",
     description:"Encountered Interesting bugs and solved eventually"
   },
     {
     id:2,
     alt:"Brief Information about LLD Implementation part 2",
-    imageUrl:"https://ik.imagekit.io/vndn6dm18/code-2.png?updatedAt=1725102347158",
+    imageUrl:"https://ik.imagekit.io/vndn6dm18/code-1.png?updatedAt=1725102346972",
     description:""
   }
 ];
